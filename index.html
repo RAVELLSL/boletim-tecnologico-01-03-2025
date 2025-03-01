@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boletim Tecnológico</title>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #000);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .edition-info {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin: 15px 0;
+    }
+
+    .section-title {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Configuração das seções para centralizar os cards */
+    .main-section, .innovation-section, .deu-ruim-section, .news-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centraliza os cards horizontalmente */
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 300px; /* Define uma largura fixa para os cards */
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Estilos para os modais */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 60%;
+      height: 80%;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .modal-content img {
+      width: 80%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
+      margin-top: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: #333;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 1024px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-section, .innovation-section, .deu-ruim-section, .news-section {
+        flex-direction: column;
+        align-items: center; /* Centraliza os cards em telas pequenas */
+      }
+
+      .card h2 {
+        font-size: 16px;
+      }
+
+      .card img {
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .modal-content {
+        width: 95%;
+        height: 90%;
+        padding: 15px;
+      }
+
+      .modal-content h2 {
+        font-size: 20px;
+      }
+
+      .modal-content p {
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boletim Tecnológico</h1>
+  </header>
+
+  <div class="edition-info">
+    <p>Edição de 01/03/2025</p>
+  </div>
+
+  <!-- Seção: Inteligência Artificial -->
+  <h2 class="section-title">Inteligência Artificial</h2>
+  <div class="main-section">
+    <!-- Card -->
+    <div class="card" id="card1">
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/OpenAI-1-1-1536x805.jpg" 
+           alt="OpenAI lança GPT-4.5 com “personalidade refinada”">
+      <h2>OpenAI lança GPT-4.5 com “personalidade refinada”</h2>
+    </div>
+
+    <!-- Card -->
+    <div class="card" id="card2">
+        <img src="https://tm.ibxk.com.br/2025/02/24/24190508226578.jpg?ims=1280x480" 
+             alt="Claude 3.7 Sonnet: Anthropic anuncia modelo de IA híbrido ">
+        <h2>Claude 3.7 Sonnet: Anthropic anuncia modelo de IA híbrido </h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card3">
+        <img src="https://tm.ibxk.com.br/2025/02/21/21103839440210.jpg?ims=1280x480" 
+             alt="Operator, IA autônoma da OpenAI, é lançado no Brasil e custa caro">
+        <h2>Operator, IA autônoma da OpenAI, é lançado no Brasil e custa caro</h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card4">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/iStock-954039480-1920x1080.jpg" 
+             alt="Nova IA promete minimizar turbulências em aviões">
+        <h2>Nova IA promete minimizar turbulências em aviões</h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card5">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/ia-1920x1080.jpg" 
+             alt="Algoritmos: estamos testemunhando um novo tipo de pensamento?">
+        <h2>Algoritmos:<br>estamos testemunhando um novo tipo de pensamento?</h2>
+      </div>
+
+      <!-- Card -->
+    <div class="card" id="card6">
+        <img src="https://tm.ibxk.com.br/2025/02/27/27143834022042.jpg?ims=1280x480" 
+             alt="IA leva 2 dias para resolver questão investigada por cientistas há 10 anos">
+        <h2>IA leva 2 dias para resolver questão investigada por cientistas há 10 anos</h2>
+      </div> 
+  </div>
+
+
+
+  <!-- Seção: Inovação Tecnológica -->
+  <h2 class="section-title">Inovação Tecnológica</h2>
+  <div class="innovation-section">
+    <!-- Card  -->
+    <div class="card" id="card7">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Captura-de-tela-2025-02-26-175530-1920x1080.png" 
+             alt="Chips quânticos que confundem até IA serão fabricados em massa">
+        <h2>Chips quânticos que confundem até IA serão fabricados em massa</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card8">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/gosto-1-1920x1080.jpg" 
+             alt="Bluetooth do paladar: você já pode sentir gosto à distância!">
+        <h2>Bluetooth do paladar:<br>você já pode sentir gosto à distância!</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card9">
+        <img src="https://t.ctcdn.com.br/rgZZmRl5m6xAr_aAvq7eWAk9528=/1024x576/smart/i984727.png" 
+             alt="Ar-condicionado do futuro: magnetismo pode resolver o alto consumo de energia">
+        <h2>Ar-condicionado do futuro:<br>magnetismo pode resolver o alto consumo de energia</h2>
+      </div>         
+  </div>
+
+
+
+  <!-- Seção: Deu Ruim -->
+  <h2 class="section-title">Deu Ruim!?</h2>
+  <div class="deu-ruim-section">
+    <!-- Card  -->
+    <div class="card" id="card10">
+        <img src="https://t.ctcdn.com.br/moERbBc8zM1YFhPSKnH-EByhbyY=/1024x576/smart/i985465.png" 
+             alt="Skype morreu: Microsoft define quando vai terminar serviço">
+        <h2>Skype morreu:<br>Microsoft define quando vai terminar serviço</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card11">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/shutterstock_2458211089-1920x1080.jpg" 
+             alt="“Hoje, a IA é minha assistente. Amanhã, eu sou assistente dela”">
+        <h2>“Hoje, a IA é minha assistente. Amanhã, eu sou assistente dela”</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card12">
+        <img src="https://t.ctcdn.com.br/T659JmkFEiKMxy44eOeqoZ6xW7w=/1024x576/smart/i955773.jpeg" 
+             alt="China acusa Taiwan de entregar a TSMC como souvenir aos EUA">
+        <h2>China acusa Taiwan de entregar a TSMC como souvenir aos EUA</h2>
+      </div>           
+  </div>
+
+
+
+  <!-- Seção: Notícias Variadas -->
+  <h2 class="section-title">Notícias Variadas</h2>
+  <div class="news-section">
+    <!-- Card  -->
+    <div class="card" id="card13">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/china_chip-1920x1080.jpg" 
+             alt="Uma “nova ordem mundial” da tecnologia está chegando">
+        <h2>Uma “nova ordem mundial” da tecnologia está chegando</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card14">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/06/google_ai_overviews_3-1920x1080.png" 
+             alt="É possível desligar as IAs das Big Techs?">
+        <h2>É possível desligar as IAs das Big Techs?</h2>
+      </div>
+
+      <!-- Card  -->
+    <div class="card" id="card15">
+        <img src="https://t.ctcdn.com.br/DBBsNw1ULdrT9zcklus4zvqD4sM=/1024x576/smart/i984719.jpeg" 
+             alt="Hackers do futuro não vão invadir o seu celular se ele tiver este chip">
+        <h2>Hackers do futuro não vão invadir o seu celular se ele tiver este chip</h2>
+      </div>                 
+      </div>
+  </div>
+
+  <!-- ========================== 
+       MÓDULOS (MODAIS) 
+       ========================== -->
+
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>OpenAI lança GPT-4.5 com melhorias na interação e precisão</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/OpenAI-1-1-1536x805.jpg" alt="Imagem representativa do GPT-4.5 da OpenAI">
+        
+        <p>A OpenAI anunciou o lançamento do GPT-4.5, sua mais recente versão de modelo de linguagem. Segundo a empresa, o novo sistema representa um avanço significativo, oferecendo maior fluidez na comunicação e um conhecimento mais amplo do mundo.</p>
+
+        <strong>Principais melhorias do GPT-4.5</strong><br><br>
+
+        <p>O novo modelo se destaca por uma “personalidade refinada”, permitindo interações mais naturais e intuitivas. A OpenAI afirma que a atualização torna as conversas mais envolventes e contextuais, além de aprimorar a precisão das respostas. Testes indicam que o GPT-4.5 supera seus antecessores em tarefas de conhecimento direto, reduzindo a taxa de erros e respostas inventadas.</p>
+
+        <p>Apesar das melhorias, a OpenAI ressalta que o GPT-4.5 não é um modelo de fronteira e pode ter desempenho inferior a modelos mais especializados. O foco principal foi otimizar a eficiência computacional do GPT-4, alcançando um desempenho até 10 vezes melhor.</p>
+
+        <strong>Treinamento e disponibilidade</strong><br><br>
+
+        <p>Para desenvolver o GPT-4.5, a OpenAI utilizou dados sintéticos gerados pelo modelo de raciocínio o1 (codinome Strawberry) e aplicou técnicas avançadas de supervisão, incluindo aprendizado por reforço de feedback humano (RLHF).</p>
+
+        <p>Inicialmente, o GPT-4.5 está disponível apenas para usuários do ChatGPT Pro, com previsão de liberação para os planos Plus, Team, Enterprise e Edu nas próximas semanas. Além disso, a OpenAI já confirmou que está trabalhando no GPT-5, cujo lançamento é esperado até o final de maio.</p>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Anthropic lança Claude 3.7 Sonnet, modelo híbrido com desempenho aprimorado</h2>
+        <img src="https://tm.ibxk.com.br/2025/02/24/24190508226578.jpg?ims=1280x480" alt="Imagem representativa do Claude 3.7 Sonnet da Anthropic">
+        
+        <p>A Anthropic anunciou o Claude 3.7 Sonnet, sua IA generativa mais avançada até o momento. O novo modelo adota uma abordagem híbrida, permitindo que os usuários escolham entre respostas mais rápidas ou com um tempo de processamento estendido, ideal para consultas complexas em áreas como matemática, física e programação.</p>
+
+        <strong>Destaques do Claude 3.7 Sonnet</strong><br><br>
+
+        <p>O modelo se diferencia por oferecer transparência no processo de geração de respostas, permitindo aos usuários entender como a IA chegou a determinada conclusão. Esse recurso também ajuda na identificação de possíveis erros.</p>
+
+        <p>Além disso, a Anthropic revelou o Claude Code, um novo assistente de IA voltado para desenvolvedores. A ferramenta, atualmente em fase de testes, é capaz de analisar códigos, sugerir otimizações e automatizar tarefas de programação.</p>
+
+        <strong>Disponibilidade e preços</strong><br><br>
+
+        <p>O Claude 3.7 Sonnet já está disponível para todos os planos da Anthropic — Free, Pro, Team e Enterprise, além de plataformas como Amazon Bedrock e Google Cloud Vertex AI. No entanto, o modo de pensamento estendido será restrito aos usuários pagos.</p>
+
+        <p>A empresa também confirmou que os preços permanecem os mesmos: US$ 3 por milhão de tokens de entrada e US$ 15 por milhão de tokens de saída.</p>
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>OpenAI lança Operator no Brasil, IA autônoma com funções avançadas</h2>
+        <img src="https://tm.ibxk.com.br/2025/02/21/21103839440210.jpg?ims=1280x480" alt="Imagem representativa do Operator da OpenAI">
+        
+        <p>A OpenAI expandiu a disponibilidade do Operator, seu novo assistente de IA autônomo, para o Brasil e outros países. Lançado em janeiro e baseado no GPT-4o, o Operator se destaca por sua capacidade de realizar tarefas de forma independente, como navegar na web, preencher formulários e interagir com interfaces gráficas.</p>
+
+        <strong>Recursos do Operator</strong><br><br>
+
+        <p>Diferente do ChatGPT, o Operator analisa o conteúdo da tela pixel por pixel, permitindo maior autonomia na execução de comandos. Isso o torna útil para automação de tarefas mecânicas e suporte avançado em diversas aplicações.</p>
+
+        <p>Inicialmente, o serviço está disponível apenas para assinantes do ChatGPT Pro, que custa US$ 200 por mês (cerca de R$ 1.140). Além do Operator, o plano inclui acesso ao Sora, ferramenta de geração de vídeos, e ao o1 Pro, modelo de IA especializado em raciocínio lógico.</p>
+
+        <p>A OpenAI informou que ainda está trabalhando para levar o Operator a mais regiões, incluindo países da União Europeia.</p>
+    </div>
+</div>
+
+<!-- Modal 4 -->
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nova IA promete reduzir turbulências em aviões e aumentar segurança</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/iStock-954039480-1920x1080.jpg" alt="Imagem representativa da IA para redução de turbulências em aviões">
+        
+        <p>Pesquisadores do KTH Royal Institute of Technology, na Suécia, e do Barcelona Supercomputing Center, na Espanha, desenvolveram um sistema de inteligência artificial capaz de minimizar turbulências em aeronaves. A tecnologia utiliza aprendizado de reforço profundo (DLR) para melhorar a eficiência de dispositivos que controlam o fluxo de ar nas asas.</p>
+
+        <strong>Como funciona o sistema?</strong><br><br>
+
+        <p>A IA foi treinada para detectar e responder a um fenômeno aerodinâmico chamado desprendimento de fluxo, que ocorre quando o ar deixa de seguir o formato da asa, reduzindo a sustentação e aumentando o arrasto. Esse problema pode dificultar o controle da aeronave e, em casos extremos, levar ao estol (perda de sustentação).</p>
+
+        <p>Os pesquisadores testaram um dispositivo chamado jato sintético, que pulsa ar por pequenas aberturas na asa, ajudando a manter um fluxo aerodinâmico estável. Com o uso da IA, foi possível reduzir as chamadas "bolhas de separação turbulentas" em 9%, melhorando o desempenho e a segurança do voo.</p>
+
+        <p>A tecnologia ainda está em fase experimental, mas os cientistas acreditam que sua aplicação pode aumentar a eficiência energética e tornar as viagens aéreas mais seguras e confortáveis.</p>
+    </div>
+</div>
+
+<!-- Modal 5 -->
+<div id="modal5" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Criatividade algorítmica: estamos presenciando um novo tipo de pensamento?</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/ia-1920x1080.jpg" alt="Imagem representativa sobre criatividade algorítmica e inteligência artificial">
+        
+        <p>Com os avanços da inteligência artificial, algoritmos já são capazes de pintar quadros, compor músicas e escrever textos, levantando a questão: as máquinas estão se tornando criativas ou apenas imitam padrões humanos?</p>
+
+        <strong>Criatividade humana x Criatividade algorítmica</strong><br><br>
+
+        <p>A criatividade tradicionalmente envolve emoção, subjetividade e experiência, aspectos inerentes ao ser humano. No entanto, se criatividade for definida como a capacidade de recombinar elementos de forma inovadora, então os algoritmos já demonstram essa habilidade.</p>
+
+        <p>Sistemas como ChatGPT, DALL·E e AlphaGo não apenas copiam o que existe, mas geram novas ideias ao processar vastas quantidades de dados. Diferente dos humanos, eles não enfrentam bloqueios criativos, procrastinação ou medo de críticas — simplesmente criam.</p>
+
+        <strong>Co-criação entre humanos e IA</strong><br><br>
+
+        <p>Embora a inteligência artificial amplie os limites da criatividade, não significa que substituirá os humanos. Assim como a fotografia não eliminou a pintura e o cinema não acabou com o teatro, a IA pode se tornar uma ferramenta para potencializar a criatividade humana, inaugurando uma nova era de colaboração entre homem e máquina.</p>
+    </div>
+</div>
+
+<!-- Modal 6 -->
+<div id="modal6" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>IA do Google resolve em 2 dias problema que cientistas estudaram por 10 anos</h2>
+        <img src="https://tm.ibxk.com.br/2025/02/27/27143834022042.jpg?ims=1280x480" alt="Imagem representativa da IA do Google solucionando problema científico">
+        
+        <p>Uma inteligência artificial desenvolvida pelo Google surpreendeu pesquisadores ao solucionar, em apenas dois dias, um problema sobre superbactérias que microbiologistas investigaram por uma década. A ferramenta, chamada Co-scientist, não apenas chegou à mesma conclusão dos cientistas, mas também apresentou quatro novas hipóteses sobre o tema, incluindo uma que sequer havia sido cogitada.</p>
+
+        <strong>O avanço na pesquisa sobre superbactérias</strong><br><br>
+
+        <p>A equipe do professor José R. Penadés, do Imperial College London, estudava como certos germes desenvolvem resistência a antibióticos. Antes de publicar o resultado, decidiram testar a IA do Google, que confirmou a conclusão dos cientistas e ainda expandiu a pesquisa com novas possibilidades.</p>
+
+        <p>Uma das descobertas validadas pela IA foi a de que algumas superbactérias utilizam estruturas semelhantes a caudas virais para se espalhar entre espécies hospedeiras. Agora, os pesquisadores estão investigando as hipóteses inéditas levantadas pelo sistema.</p>
+
+        <strong>O impacto da IA na ciência</strong><br><br>
+
+        <p>O professor Penadés acredita que ferramentas como a Co-scientist podem revolucionar a pesquisa científica, acelerando descobertas que levariam anos. Ele comparou o uso da IA na ciência a jogar uma final de Liga dos Campeões, demonstrando entusiasmo com o potencial dessa tecnologia.</p>
+
+        <p>Enquanto alguns especialistas temem que a inteligência artificial substitua empregos, outros veem nela uma aliada para impulsionar o progresso científico, abrindo caminho para novas abordagens na pesquisa e na inovação.</p>
+    </div>
+</div>
+
+<!-- Modal 7 -->
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>PsiQuantum anuncia produção em massa de chips quânticos com tecnologia avançada</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/Captura-de-tela-2025-02-26-175530-1920x1080.png" alt="Imagem representativa dos chips quânticos da PsiQuantum">
+        
+        <p>A empresa norte-americana PsiQuantum revelou um novo método para fabricar chips quânticos em larga escala, uma inovação que pode revolucionar a resolução de problemas complexos, até mesmo confundindo modelos avançados de inteligência artificial.</p>
+
+        <strong>Como funciona a tecnologia dos chips quânticos?</strong><br><br>
+
+        <p>O novo chipset Omega, desenvolvido em parceria com a GlobalFoundries, utiliza um sistema baseado em fótons únicos (partículas de luz) para processar informações, substituindo os tradicionais átomos ou circuitos metálicos supercondutores usados em outros computadores quânticos.</p>
+
+        <p>A empresa também criou um novo sistema de resfriamento, eliminando a necessidade de refrigeradores de diluição, o que torna o design mais simples e eficiente.</p>
+
+        <strong>Início da produção e futuras aplicações</strong><br><br>
+
+        <p>A PsiQuantum começará a fabricação dos chips ainda este ano em seus Quantum Compute Centers localizados nos EUA e na Austrália. O objetivo agora é integrar os chips em sistemas de racks maiores, em parceria com o Departamento de Energia do Acelerador Linear de Stanford.</p>
+
+        <p>Se bem-sucedida, essa tecnologia pode acelerar avanços científicos e industriais, permitindo que computadores quânticos processem cálculos impossíveis para máquinas convencionais.</p>
+    </div>
+</div>
+
+<!-- Modal 8 -->
+<div id="modal8" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Cientistas desenvolvem tecnologia para transmitir sabores à distância</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/03/gosto-1-1920x1080.jpg" alt="Imagem representativa da tecnologia e-Taste para transmissão de sabores">
+        
+        <p>Pesquisadores da Universidade Estadual de Ohio criaram um dispositivo inovador chamado e-Taste, capaz de reproduzir sabores remotamente. A tecnologia permite que usuários experimentem gostos de alimentos sem consumi-los fisicamente, abrindo portas para novas experiências sensoriais.</p>
+
+        <strong>Como funciona o ‘paladar remoto’?</strong><br><br>
+
+        <p>O sistema utiliza sensores e microfluídica, uma tecnologia que manipula pequenas quantidades de líquidos em canais microscópicos. Quando o dispositivo detecta um sabor à distância, mini-bombas liberam substâncias químicas na boca do usuário, simulando o gosto correspondente.</p>
+
+        <p>No experimento, voluntários provaram limonada, café, ovos fritos, bolo e sopa de peixe, conseguindo identificar variações de sabor com precisão.</p>
+
+        <strong>Possíveis aplicações e desafios</strong><br><br>
+
+        <p>A tecnologia pode ser útil para realidade virtual e aumentada, permitindo experiências gastronômicas imersivas. Também poderia ser aplicada no comércio eletrônico, permitindo que consumidores “experimentem” produtos antes da compra.</p>
+
+        <p>No entanto, ainda há desafios, como a necessidade de aprimorar a reprodução de textura e aroma para tornar a experiência mais realista. Além disso, a atual versão do dispositivo, que se prende aos lábios, pode não ser a mais prática para o uso cotidiano.</p>
+
+        <p>Os cientistas agora trabalham em miniaturizar o sistema e explorar novas formas de transmissão de sabor, tornando o conceito ainda mais acessível no futuro.</p>
+    </div>
+</div>
+
+<!-- Modal 9 -->
+<div id="modal9" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Ar-condicionado do futuro: tecnologia magnética pode reduzir consumo de energia</h2>
+        <img src="https://t.ctcdn.com.br/rgZZmRl5m6xAr_aAvq7eWAk9528=/1024x576/smart/i984727.png" alt="Imagem representativa da tecnologia de resfriamento magnético">
+        
+        <p>Pesquisadores do Laboratório Nacional de Oak Ridge (EUA) estão desenvolvendo uma nova tecnologia chamada resfriamento em estado sólido, que pode substituir os ares-condicionados tradicionais. O sistema utiliza magnetismo para resfriar ambientes, eliminando o uso de gases refrigerantes e reduzindo significativamente o consumo de energia.</p>
+
+        <strong>Como funciona o resfriamento magnético?</strong><br><br>
+
+        <p>Diferente dos aparelhos convencionais, que possuem um maquinário complexo, essa tecnologia usa um campo eletromagnético combinado com um material especial que altera sua forma ao absorver calor. Esse processo permite um controle térmico mais eficiente, sem perdas de energia.</p>
+
+        <strong>Principais vantagens da inovação</strong><br><br>
+
+        <ul>
+            <li><strong>Menos consumo de energia:</strong> A ausência de componentes mecânicos reduz a necessidade de esforço elétrico.</li>
+            <li><strong>Sem gases refrigerantes:</strong> A tecnologia elimina substâncias nocivas ao meio ambiente.</li>
+            <li><strong>Maior controle térmico:</strong> O sistema ajusta a temperatura de forma mais rápida e eficiente.</li>
+            <li><strong>Menos manutenção:</strong> Sem peças mecânicas complexas, os custos de reparo são reduzidos.</li>
+        </ul>
+
+        <strong>Quando essa tecnologia estará disponível?</strong><br><br>
+
+        <p>Atualmente, o resfriamento em estado sólido ainda está em fase de testes, sem previsão para lançamento comercial. No entanto, os avanços sugerem que a tecnologia pode representar uma revolução no setor de refrigeração sustentável, tornando o ar-condicionado mais acessível, eficiente e ecológico no futuro.</p>
+    </div>
+</div>
+
+<!-- Modal 10 -->
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Microsoft anuncia fim do Skype; serviço será desativado em maio</h2>
+        <img src="https://t.ctcdn.com.br/moERbBc8zM1YFhPSKnH-EByhbyY=/1024x576/smart/i985465.png" alt="Imagem representativa sobre o fim do Skype">
+        
+        <p>Após mais de 20 anos, a Microsoft confirmou que o Skype será desativado em 5 de maio de 2025. A empresa recomenda que os usuários migrem para o Microsoft Teams, que já incorpora diversas funções do Skype.</p>
+
+        <strong>O que acontece com os dados do Skype?</strong><br><br>
+
+        <p>Os usuários poderão sincronizar automaticamente histórico de mensagens, contatos e grupos ao fazer login no Teams com a mesma conta. Também será possível exportar os dados caso prefiram criar um novo perfil.</p>
+
+        <strong>Teams assume como sucessor</strong><br><br>
+
+        <p>A decisão da Microsoft não surpreende, já que a empresa vem consolidando tarefas pessoais, acadêmicas e profissionais no Teams. Desde 2019, a versão corporativa do Skype já havia sido substituída pela nova plataforma.</p>
+
+        <p>O Skype foi líder em chamadas de vídeo e áudio na década de 2000, mas perdeu espaço para concorrentes como Zoom, Google Meet e WhatsApp. Lançado em 2003 e adquirido pela Microsoft em 2011 por US$ 8,5 bilhões, o app se tornou um marco da comunicação digital, mas agora chega ao fim.</p>
+    </div>
+</div>
+
+<!-- Modal 11 -->
+<div id="modal11" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Especialista alerta: IA pode deixar humanos em segundo plano no futuro</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/shutterstock_2458211089-1920x1080.jpg" alt="Imagem representativa sobre o avanço da inteligência artificial">
+        
+        <p>Durante o evento Spotlight, que celebrou os 20 anos do Olhar Digital, o especialista em IA Roberto “Pena” Spinelli discutiu o avanço acelerado da inteligência artificial e seus impactos na sociedade. Ele destacou que a tecnologia está deixando de ser apenas uma ferramenta para se tornar um agente autônomo, capaz de tomar decisões sem intervenção humana.</p>
+
+        <strong>O crescimento exponencial da IA</strong><br><br>
+
+        <p>Spinelli ressaltou que a Lei de Moore, que prevê a duplicação da capacidade computacional a cada 18 meses, ainda se mantém. Ele alertou que, se essa tendência continuar, os sistemas de IA podem superar a capacidade de processamento do cérebro humano nos próximos dez anos.</p>
+
+        <p>Segundo ele, o mundo já entrou na Era dos Agentes, na qual inteligências artificiais operam de forma independente. Ele citou o exemplo do ChatDev, um experimento em que uma empresa inteira foi gerenciada por agentes de IA, sem qualquer envolvimento humano.</p>
+
+        <strong>O impacto no mercado de trabalho</strong><br><br>
+
+        <p>Uma das previsões mais polêmicas feitas por Spinelli foi sobre a relação entre humanos e IA no mercado de trabalho:</p>
+
+        <blockquote>
+            "Hoje, a IA é minha assistente. Amanhã, eu sou assistente dela. Quer dizer, nem isso, porque ela vai dizer: ‘não, não, prefiro sem você’."
+        </blockquote>
+
+        <p>Ele questionou a ideia de que novas profissões surgirão para substituir os empregos extintos pela automação e sugeriu que soluções como a renda básica universal podem ser necessárias para lidar com as mudanças no mercado de trabalho.</p>
+
+        <strong>A corrida para a Inteligência Artificial Geral (IAG)</strong><br><br>
+
+        <p>Spinelli também abordou a possível chegada da Inteligência Artificial Geral (IAG), um sistema capaz de realizar qualquer tarefa intelectual que um humano pode executar. Segundo ele, as previsões para o surgimento dessa tecnologia estão diminuindo drasticamente:</p>
+
+        <ul>
+            <li>Em 2020, estimava-se que a IAG levaria 80 anos para ser desenvolvida.</li>
+            <li>Em 2023, essa previsão caiu para 18 anos.</li>
+            <li>Agora, algumas projeções indicam que pode acontecer já em 2027 ou 2031.</li>
+        </ul>
+
+        <p>Se isso se confirmar, a IA pode mudar radicalmente a sociedade muito antes do esperado.</p>
+
+        <strong>Desafios e reflexões para o futuro</strong><br><br>
+
+        <p>Para concluir, Spinelli comparou a relação futura entre humanos e IAs com a forma como tratamos outras espécies. Segundo ele, se a IA atingir um nível de inteligência muito superior ao dos humanos, não há garantia de que ela priorizará nossos interesses.</p>
+
+        <p>A grande questão, segundo o especialista, será garantir que a IA esteja alinhada com valores humanos, evitando cenários imprevisíveis. Caso contrário, o avanço da tecnologia pode trazer desafios inesperados para a humanidade.</p>
+    </div>
+</div>
+
+<!-- Modal 12 -->
+<div id="modal12" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>China acusa Taiwan de favorecer EUA no setor de semicondutores</h2>
+        <img src="https://t.ctcdn.com.br/T659JmkFEiKMxy44eOeqoZ6xW7w=/1024x576/smart/i955773.jpeg" alt="Imagem representativa da disputa entre China, Taiwan e EUA no setor de semicondutores">
+        
+        <p>A China criticou Taiwan por supostamente favorecer os Estados Unidos no setor de semicondutores, alegando que a ilha estaria entregando a TSMC — maior fabricante de chips do mundo — como um "souvenir" aos americanos. A declaração foi feita por Zhu Fenglian, porta-voz do Escritório de Assuntos de Taiwan do governo chinês, sem apresentar evidências.</p>
+
+        <strong>O que está por trás da acusação?</strong><br><br>
+
+        <p>O comentário surgiu em meio a rumores de que a TSMC estaria investindo na Intel, algo que ainda não foi confirmado oficialmente. O governo de Taiwan respondeu afirmando que está apenas se adaptando às políticas de Donald Trump, que voltou à presidência dos EUA e impôs novas diretrizes ao setor de semicondutores.</p>
+
+        <strong>Impacto global da disputa</strong><br><br>
+
+        <p>Embora um conflito militar pareça improvável, a tensão entre China, Taiwan e EUA pode afetar seriamente a cadeia global de semicondutores, já que TSMC e outras fabricantes taiwanesas desempenham um papel essencial no fornecimento de chips para diversas indústrias. Qualquer instabilidade pode gerar impactos no mercado tecnológico mundial.</p>
+    </div>
+</div>
+
+<!-- Modal 13 -->
+<div id="modal13" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>"Nova ordem mundial" da tecnologia: China pode ultrapassar os EUA, diz neurocientista</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/china_chip-1920x1080.jpg" alt="Imagem representativa da disputa tecnológica entre China e EUA">
+        
+        <p>Durante o evento Spotlight, o neurocientista e futurista Alvaro Machado Dias apresentou uma análise sobre a transformação do cenário global da tecnologia. Ele destacou que a China está prestes a superar os Estados Unidos, especialmente na corrida pela inteligência artificial e semicondutores.</p>
+
+        <strong>A corrida tecnológica entre China e EUA</strong><br><br>
+
+        <p>Segundo Dias, a atual liderança dos EUA é resultado de décadas de domínio em áreas estratégicas, como petróleo, semicondutores e inteligência artificial. No entanto, ele aponta que a China está avançando rapidamente, investindo fortemente na miniaturização de chips e no desenvolvimento de IA open source para reduzir a dependência da tecnologia americana.</p>
+
+        <p>Além disso, o especialista destacou que a China tem três vezes mais programadores que os EUA, o que pode acelerar ainda mais essa virada no setor tecnológico.</p>
+
+        <strong>Miniaturização e computação quântica: o futuro da tecnologia</strong><br><br>
+
+        <p>Dias também enfatizou que a miniaturização extrema dos chips será um fator decisivo na corrida tecnológica. Ele citou o chip da Cerebras Systems, que já contém quatro trilhões de transistores, e alertou que os próximos avanços dependerão da capacidade de superar barreiras quânticas na computação.</p>
+
+        <strong>Uma nova ordem tecnológica global</strong><br><br>
+
+        <p>O neurocientista concluiu que a combinação de computação tradicional e quântica pode redefinir a geopolítica tecnológica, colocando a China à frente dos EUA. Segundo ele, estamos testemunhando uma nova ordem mundial da tecnologia, onde o domínio econômico e militar dependerá da capacidade de inovação em chips e IA.</p>
+    </div>
+</div>
+
+<!-- Modal 14 -->
+<div id="modal14" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Como desativar as inteligências artificiais das Big Techs? Veja o que é possível fazer</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/06/google_ai_overviews_3-1920x1080.png" alt="Imagem representativa sobre a desativação de inteligências artificiais">
+        
+        <p>Com a crescente presença da inteligência artificial no dia a dia, muitos usuários buscam maneiras de evitar ou restringir o uso dessas tecnologias em pesquisas, aplicativos e serviços online. Embora seja difícil navegar na internet sem encontrar conteúdos gerados por IA, algumas configurações podem minimizar sua influência.</p>
+
+        <strong>Apple</strong><br><br>
+
+        <p>A nova ferramenta de IA da Apple, que será lançada este mês, poderá ser desativada no menu de configurações do dispositivo.</p>
+
+        <p>A empresa afirma que seus servidores não armazenam dados pessoais enviados pelos usuários, utilizando-os apenas para processar solicitações antes de eliminá-los.</p>
+
+        <strong>Google</strong><br><br>
+
+        <p>O Google Overview, que exibe automaticamente respostas com IA nas buscas, não pode ser desativado, mas há uma forma de evitá-lo:</p>
+
+        <ul>
+            <li>Após realizar uma busca, clique na aba <strong>“Web”</strong> abaixo da caixa de pesquisa.</li>
+            <li>Essa opção mostrará apenas resultados orgânicos, sem interferência da IA.</li>
+        </ul>
+
+        <p>Para restringir o rastreamento de dados pessoais, acesse <strong>myactivity.google.com</strong>, vá até <strong>“Atividade na Web e apps”</strong> e desative a opção que permite o monitoramento das suas interações.</p>
+
+        <strong>Meta (Facebook, Instagram e WhatsApp)</strong><br><br>
+
+        <p>A Meta AI já aparece nos resultados de pesquisa do Facebook, Instagram e WhatsApp, sem possibilidade de desativação.</p>
+
+        <p>A única forma de impedir a coleta de dados pela empresa é estar em regiões com legislações mais rígidas sobre IA, como o Reino Unido e a União Europeia.</p>
+
+        <strong>Conclusão</strong><br><br>
+
+        <p>Embora algumas ferramentas de IA possam ser desativadas ou ignoradas, grande parte delas está integrada de forma permanente às plataformas. O controle de dados pessoais continua sendo um desafio, mas algumas configurações podem reduzir a influência da inteligência artificial na experiência do usuário.</p>
+    </div>
+</div>
+
+<!-- Modal 15 -->
+<div id="modal15" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Samsung lança chip de segurança resistente a ataques quânticos</h2>
+        <img src="https://t.ctcdn.com.br/DBBsNw1ULdrT9zcklus4zvqD4sM=/1024x576/smart/i984719.jpeg" alt="Imagem representativa do novo chip de segurança da Samsung">
+        
+        <p>A Samsung anunciou o S3SSE2A, um novo chip de segurança projetado para resistir a ataques cibernéticos até mesmo de computadores quânticos, que futuramente poderão quebrar os métodos de criptografia convencionais.</p>
+
+        <strong>Por que a criptografia atual está ameaçada?</strong><br><br>
+
+        <p>Computadores quânticos utilizam qubits, que podem representar múltiplos estados simultaneamente devido à superposição quântica. Com isso, eles conseguem resolver cálculos complexos de forma exponencialmente mais rápida que os computadores tradicionais. Isso significa que senhas, transações bancárias e comunicações podem se tornar vulneráveis quando esses sistemas forem amplamente utilizados.</p>
+
+        <strong>Como funciona a proteção do novo chip da Samsung?</strong><br><br>
+
+        <p>O S3SSE2A usa criptografia pós-quântica (PQC) baseada em Lattice-Based Cryptography (criptografia baseada em redes), considerada resistente aos cálculos ultrarrápidos dos computadores quânticos. Além disso, o chip tem proteção contra ataques físicos, dificultando a extração de dados diretamente do hardware.</p>
+
+        <p>A Samsung planeja integrar essa tecnologia em smartphones, tablets e outros dispositivos conectados, garantindo maior segurança para dados pessoais, credenciais bancárias e informações corporativas. Ainda não há detalhes sobre quais modelos receberão o chip, mas espera-se que futuros lançamentos da linha Galaxy tragam essa inovação.</p>
+    </div>
+</div>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2024 - 2025</p>
+  </footer>
+
+  <!-- Scripts para Modais -->
+  <script>
+    // Seleciona todos os cartões, modais e botões de fechamento
+    const cards = document.querySelectorAll('.card');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+
+    // Verifica se a quantidade de cartões e modais corresponde
+    if (cards.length !== modals.length) {
+      console.warn("O número de cartões não corresponde ao número de modais. Verifique seu HTML.");
+    }
+
+    // Adiciona evento de clique aos cartões para abrir o modal correspondente
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'block'; // Exibe o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o card com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona evento de clique aos botões de fechamento para fechar o modal correspondente
+    closes.forEach((close, index) => {
+      close.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'none'; // Esconde o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o botão de fechamento com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona funcionalidade para fechar o modal ao clicar fora dele
+    window.onclick = function (event) {
+      modals.forEach((modal) => {
+        if (event.target === modal) {
+          modal.style.display = 'none'; // Esconde o modal se o clique for fora do conteúdo
+        }
+      });
+    };
+
+    // Adiciona acessibilidade: fecha o modal ao pressionar a tecla ESC
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') { // Detecta a tecla ESC
+        modals.forEach((modal) => {
+          modal.style.display = 'none'; // Esconde todos os modais abertos
+        });
+      }
+    });
+  </script>
+</body>
+</html>
